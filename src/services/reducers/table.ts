@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ITableState } from "../../utils/types";
 import { fetchPosts, setRequest } from "../actions/table";
 
 export const initialState = {
   request: false,
   fetchSuccess: true,
   posts: [],
+  page: 1,
 };
 
 export const tableSlice = createSlice({

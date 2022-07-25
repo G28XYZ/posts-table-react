@@ -1,0 +1,7 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-top: 23px;
+  box-sizing: border-box;
+}

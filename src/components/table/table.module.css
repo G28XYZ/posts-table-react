@@ -1,2 +1,40 @@
-.table {
+.tableBodyColumn:first-child {
+  text-align: center;
+}
+
+.tableBodyColumn {
+  align-self: center;
+  vertical-align: middle;
+  min-height: 52px;
+  min-width: 110px;
+  border: 1px solid #e3e6ec;
+}
+
+.tableHead {
+  background: #474955;
+  color: white;
+  height: 54px;
+}
+
+.tableHeadColumn {
+  border: none;
+  vertical-align: middle;
+  padding-left: 20%;
+  max-width: 530px;
+}
+
+.tableHeadColumn:last-child {
+  max-width: 432px;
+}
+
+.tableHeadButton {
+  margin-left: 45px;
+  border: none;
+  width: 12px;
+  height: 6px;
+  background-color: transparent;
+  background-image: url(../../images/arrow.svg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 }

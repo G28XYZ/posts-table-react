@@ -3,9 +3,9 @@ import { useAppDispatch, useAppSelector } from "../../services/store";
 import { fetchPosts } from "../../services/actions/table";
 import tableSlice from "../../services/reducers/table";
 import style from "./app.module.css";
-import SearchFilter from "../search-filter/SearchFilter";
 import { Route, Routes } from "react-router-dom";
-import Table from "../table/Table";
+import NotFoundPage from "../not-found-page/NotFoundPage";
+import Main from "../main/Main";
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
@@ -19,9 +19,9 @@ const App: FC = () => {
 
   return (
     <div className={style.page}>
-      <SearchFilter></SearchFilter>
       <Routes>
-        <Route path="/" element={<Table />}></Route>
+        <Route path="/" element={<Main />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>
   );

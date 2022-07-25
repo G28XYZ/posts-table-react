@@ -7,22 +7,33 @@ const Table: FC = () => {
   const table = useAppSelector((state) => state.table);
 
   return (
-    <table className={`table table-bordered`}>
-      <thead>
+    <table className={`table`}>
+      <thead className={style.tableHead}>
         <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Заголовок</th>
-          <th scope="col">Описание</th>
+          <th className={style.tableHeadColumn}>
+            ID
+            <button className={style.tableHeadButton}></button>
+          </th>
+          <th className={style.tableHeadColumn}>
+            Заголовок
+            <button className={style.tableHeadButton}></button>
+          </th>
+          <th className={style.tableHeadColumn}>
+            Описание
+            <button className={style.tableHeadButton}></button>
+          </th>
         </tr>
       </thead>
       <tbody>
-        {table.posts.map((post: IFetchPostData) => (
-          <tr key={post.id}>
-            <td>{post.id}</td>
-            <td>{post.title}</td>
-            <td>{post.body}</td>
-          </tr>
-        ))}
+        {table.posts
+          .slice(table.page - 1, table.page * 10)
+          .map((post: IFetchPostData) => (
+            <tr key={post.id} className={style.tableBodyRow}>
+              <td className={style.tableBodyColumn}>{post.id}</td>
+              <td className={style.tableBodyColumn}>{post.title}</td>
+              <td className={style.tableBodyColumn}>{post.body}</td>
+            </tr>
+          ))}
       </tbody>
     </table>
   );
