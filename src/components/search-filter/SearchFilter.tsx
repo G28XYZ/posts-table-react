@@ -1,8 +1,8 @@
-import { FC } from "react";
+import { ChangeEvent, FC, FormEvent } from "react";
 import style from "./search-filter.module.css";
 
 const SearchFilter: FC = () => {
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
 

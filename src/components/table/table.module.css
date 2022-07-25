@@ -10,6 +10,10 @@
   border: 1px solid #e3e6ec;
 }
 
+.tableBodyColumn {
+  max-width: 432px;
+}
+
 .tableHead {
   background: #474955;
   color: white;
@@ -19,8 +23,8 @@
 .tableHeadColumn {
   border: none;
   vertical-align: middle;
-  padding-left: 20%;
   max-width: 530px;
+  text-align: center;
 }
 
 .tableHeadColumn:last-child {
@@ -28,7 +32,7 @@
 }
 
 .tableHeadButton {
-  margin-left: 45px;
+  margin-left: 40px;
   border: none;
   width: 12px;
   height: 6px;
@@ -37,4 +41,9 @@
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+  transition: transform 0.6s;
+}
+
+.tableHeadButton_active {
+  transform: rotate(180deg);
 }

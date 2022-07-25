@@ -1,0 +1,27 @@
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  color: rgba(71, 73, 85, 1);
+  font-weight: 700;
+  font-size: 18px;
+  padding: 0 25px 12px 25px;
+}
+
+.pageList {
+  display: flex;
+  list-style-type: none;
+  gap: 10px;
+  font-style: italic;
+  margin: 0;
+  padding: 0;
+}
+
+.pageActive {
+  color: rgba(126, 188, 60, 1);
+}
+
+.button {
+  border: none;
+  background-color: transparent;
+  font-size: 24px;
+}
