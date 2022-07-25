@@ -3,10 +3,13 @@ import api from "../../utils/api";
 
 export const fetchPosts = createAsyncThunk("table/fetchPosts", async () => {
   const response = await api.getPosts();
-  if (response.success) {
-    return response.data;
+  if (response) {
+    return { success: true, data: response };
   } else {
-    console.log(response);
-    return false;
+    return { success: false, data: [] };
   }
 });
+
+export const setRequest = (state: any, action: any) => {
+  console.log(action);
+};
