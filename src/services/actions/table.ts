@@ -1,6 +1,6 @@
 import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import api from "../../utils/api";
-import { ITableAction, ITableState } from "../../utils/types";
+import { ITableState } from "../../utils/types";
 
 export const fetchPosts = createAsyncThunk("table/fetchPosts", async () => {
   const response = await api.getPosts();
@@ -11,17 +11,25 @@ export const fetchPosts = createAsyncThunk("table/fetchPosts", async () => {
   }
 });
 
-export const setRequest = (
-  state: ITableState,
-  action: PayloadAction<ITableAction>
-) => {
-  state.request = action.payload.request || false;
+export const setPage = (state: ITableState, action: PayloadAction<{ page: number }>) => {
+  state.page = action.payload.page;
+};
+
+export const setRequest = (state: ITableState, action: PayloadAction<{ request: boolean }>) => {
+  state.request = action.payload.request;
 };
 
 export const setTableState = (
   state: ITableState,
-  action: PayloadAction<ITableAction>
+  action: PayloadAction<{ tableState: ITableState }>
 ) => {
-  const tableState = action.payload.tableState as ITableState;
+  const tableState = action.payload.tableState;
   state = Object.assign(state, tableState);
+};
+
+export const setSearchText = (
+  state: ITableState,
+  action: PayloadAction<{ searchText: string }>
+) => {
+  state.searchText = action.payload.searchText;
 };

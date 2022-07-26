@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchPosts, setRequest, setTableState } from "../actions/table";
+import { fetchPosts, setRequest, setTableState, setPage, setSearchText } from "../actions/table";
 
 export const initialState = {
   request: true,
@@ -16,6 +16,8 @@ export const tableSlice = createSlice({
   reducers: {
     setRequest,
     setTableState,
+    setPage,
+    setSearchText,
   },
   extraReducers: (builder) => {
     builder.addCase(fetchPosts.fulfilled, (state, action) => {

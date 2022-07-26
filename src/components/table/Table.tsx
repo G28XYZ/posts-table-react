@@ -1,14 +1,39 @@
-import { FC, ReactElement, useEffect } from "react";
+import { FC, ReactElement, useEffect, useMemo, useState } from "react";
 import { useAppSelector } from "../../services/store";
+import { emptyPostData } from "../../utils/constants";
 import { IFetchPostData } from "../../utils/types";
+import Post from "../post-component/Post";
 import style from "./table.module.css";
 
-const Table: FC<{ children: ReactElement }> = ({ children }) => {
-  const { posts, page, maxCountOnPage } = useAppSelector(
-    (state) => state.table
-  );
+const { generate } = require("shortid");
 
-  useEffect(() => {}, []);
+const Table: FC<{ children: ReactElement }> = ({ children }) => {
+  const [sort, setSort] = useState({ id: false, title: false, body: false });
+
+  const { posts, page, maxCountOnPage, searchText } = useAppSelector((state) => state.table);
+
+  const postsSlice = posts.slice((page - 1) * maxCountOnPage, page * maxCountOnPage);
+
+  const filteredPostsByText: IFetchPostData[] = useMemo(() => {
+    const filtered: IFetchPostData[] = postsSlice.filter((post: IFetchPostData) => {
+      return post.body.includes(searchText) || post.title.includes(searchText);
+    });
+    return filtered;
+  }, [sort, searchText, page]);
+
+  const checkedOnFillFilteredPosts: any = useMemo(() => {
+    let result = filteredPostsByText;
+    if (result.length < maxCountOnPage) {
+      result = [...result, ...Array(maxCountOnPage - result.length)];
+    } else {
+      result = result.filter((post) => post.id > 0);
+    }
+    return result.slice();
+  }, [filteredPostsByText.length, page]);
+
+  useEffect(() => {
+    console.log(checkedOnFillFilteredPosts);
+  }, [searchText]);
 
   return (
     <>
@@ -30,15 +55,13 @@ const Table: FC<{ children: ReactElement }> = ({ children }) => {
           </tr>
         </thead>
         <tbody>
-          {posts
-            .slice(page - 1, page * maxCountOnPage)
-            .map((post: IFetchPostData) => (
-              <tr key={post.id} className={style.tableBodyRow}>
-                <td className={style.tableBodyColumn}>{post.id}</td>
-                <td className={style.tableBodyColumn}>{post.title}</td>
-                <td className={style.tableBodyColumn}>{post.body}</td>
-              </tr>
-            ))}
+          {checkedOnFillFilteredPosts.map((post: IFetchPostData | undefined) =>
+            post ? (
+              <Post key={post.id} post={post} />
+            ) : (
+              <Post key={generate()} post={emptyPostData} />
+            )
+          )}
         </tbody>
       </table>
       {children}

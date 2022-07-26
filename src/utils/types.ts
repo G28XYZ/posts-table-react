@@ -1,9 +1,12 @@
+import { PayloadAction } from "@reduxjs/toolkit";
+
 export interface ITableState {
   request: boolean;
   fetchSuccess: boolean;
   posts: [] | IFetchPostData[];
   page: number;
   searchText: string;
+  maxCountOnPage: number;
 }
 
 export interface IFetchPostData {
@@ -11,9 +14,4 @@ export interface IFetchPostData {
   id: number;
   title: string;
   body: string;
-}
-
-export interface ITableAction {
-  tableState?: ITableState;
-  request?: boolean;
 }
