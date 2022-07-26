@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { ITableState } from "../../utils/types";
 import {
   fetchPosts,
   setRequest,
@@ -29,12 +30,13 @@ export const tableSlice = createSlice({
     setFetchSuccess,
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchPosts.fulfilled, (state, action) => {
+    builder.addCase(fetchPosts.fulfilled, (state: ITableState, action) => {
       if (action.payload.success) {
         state.posts = action.payload.data;
         state.fetchSuccess = true;
         state.request = false;
       } else {
+        state.posts = [];
         state.fetchSuccess = false;
         state.request = false;
       }

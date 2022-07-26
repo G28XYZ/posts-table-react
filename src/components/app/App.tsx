@@ -36,7 +36,7 @@ const App: FC = () => {
     console.log("render app");
     dispatch(fetchPosts());
     const storage = getStorage();
-    if (storage && storage.posts.length) {
+    if (storage) {
       dispatch(setRequest({ request: false }));
       dispatch(setTableState({ tableState: { ...storage, fetchSuccess: true } }));
     } else {

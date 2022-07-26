@@ -4,7 +4,7 @@ import { useAppSelector } from "../../services/store";
 
 const ProtectedRoute: FC = () => {
   const { maxCountOnPage, posts } = useAppSelector((state) => state.table);
-  const maxCount = Math.ceil(posts.length / maxCountOnPage);
+  const maxCount = Math.ceil(posts.length || 1 / maxCountOnPage);
   const params = useParams<Params>();
   const { number } = Object.assign(params);
 

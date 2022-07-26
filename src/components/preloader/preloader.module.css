@@ -49,6 +49,7 @@
   padding: 20px;
   align-self: center;
   margin: auto;
+  box-sizing: border-box;
 }
 
 .preloaderContainer {

@@ -3,7 +3,16 @@ import api from "../../utils/api";
 import { ITableState } from "../../utils/types";
 
 export const fetchPosts = createAsyncThunk("table/fetchPosts", async () => {
-  const response = await api.getPosts();
+  const response = await api
+    .getPosts()
+    .then((data) => {
+      return data;
+    })
+    .catch((err) => {
+      console.log(`Ошибка: ${err}`);
+      return null;
+    });
+
   if (response) {
     return { success: true, data: response };
   } else {
