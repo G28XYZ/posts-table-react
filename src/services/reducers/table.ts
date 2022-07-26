@@ -8,6 +8,7 @@ export const initialState = {
   page: 1,
   searchText: "",
   maxCountOnPage: 10,
+  tableHead: ["id", "title", "body"],
 };
 
 export const tableSlice = createSlice({

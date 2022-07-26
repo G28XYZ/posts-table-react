@@ -1,5 +1,3 @@
-import { PayloadAction } from "@reduxjs/toolkit";
-
 export interface ITableState {
   request: boolean;
   fetchSuccess: boolean;
@@ -7,11 +5,16 @@ export interface ITableState {
   page: number;
   searchText: string;
   maxCountOnPage: number;
+  tableHead: string[];
 }
 
 export interface IFetchPostData {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
+  readonly userId: number;
+  readonly id: number;
+  readonly title: string;
+  readonly body: string;
+}
+
+export interface ISortParam {
+  [key: string]: boolean;
 }
