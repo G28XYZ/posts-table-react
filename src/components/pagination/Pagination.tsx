@@ -6,6 +6,7 @@ import style from "./pagination.module.css";
 
 const Pagination: FC = () => {
   const dispatch = useAppDispatch();
+
   const { setPage } = tableSlice.actions;
   const params = useParams<Params>();
 

@@ -12,7 +12,7 @@ const ProtectedRoute: FC = () => {
     return isNaN(number) !== false || maxCount < parseInt(number) || parseInt(number) <= 0;
   };
 
-  return checkParams() ? <Navigate to="/page/1" /> : <Outlet />;
+  return checkParams() ? <Navigate to={`/page/1`} /> : <Outlet />;
 };
 
 export default ProtectedRoute;
