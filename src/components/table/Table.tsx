@@ -17,9 +17,9 @@ const Table: FC<{ children: ReactElement }> = ({ children }) => {
   const { page, maxCountOnPage, searchText, tableHead, filteredPosts, sortValue } = tableState;
 
   const [sortParam, setSortParam] = useState<ISortParam>({
-    id: sortValue === "id",
-    title: sortValue === "title",
-    body: sortValue === "body",
+    id: false,
+    title: false,
+    body: false,
   });
 
   // сортировка по выбранному заголовку, если массив не пустой и выбран заголовок

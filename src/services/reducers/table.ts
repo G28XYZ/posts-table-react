@@ -20,7 +20,7 @@ export const initialState = {
   searchText: "",
   maxCountOnPage: 10,
   tableHead: ["id", "title", "body"],
-  sortValue: "",
+  sortValue: "id",
 };
 
 export const tableSlice = createSlice({
