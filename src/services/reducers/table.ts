@@ -8,6 +8,7 @@ import {
   setPage,
   setSearchText,
   setFetchSuccess,
+  setSortValue,
 } from "../actions/table";
 
 export const initialState = {
@@ -19,6 +20,7 @@ export const initialState = {
   searchText: "",
   maxCountOnPage: 10,
   tableHead: ["id", "title", "body"],
+  sortValue: "",
 };
 
 export const tableSlice = createSlice({
@@ -30,6 +32,7 @@ export const tableSlice = createSlice({
     setPage,
     setSearchText,
     setFetchSuccess,
+    setSortValue,
   },
   extraReducers: (builder) => {
     builder.addCase(fetchPosts.fulfilled, (state: ITableState, action) => {

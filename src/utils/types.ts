@@ -7,6 +7,7 @@ export interface ITableState {
   searchText: string;
   maxCountOnPage: number;
   tableHead: string[];
+  sortValue: string;
 }
 
 export interface IFetchPostData {

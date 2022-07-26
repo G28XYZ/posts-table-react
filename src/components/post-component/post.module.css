@@ -1,6 +1,7 @@
 .tableBodyColumn:first-child {
   text-align: center;
-  width: 110px;
+  max-width: 110px;
+  width: calc((110 / 1080) * 100%);
 }
 
 .tableBodyColumn {
@@ -13,9 +14,11 @@
 }
 
 .tableBodyColumn {
+  width: calc((440 / 1080) * 100%);
   max-width: 440px;
 }
 
 .tableBodyColumn:nth-child(2) {
+  width: calc((530 / 1080) * 100%);
   max-width: 530px;
 }

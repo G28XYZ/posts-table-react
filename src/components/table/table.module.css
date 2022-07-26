@@ -61,6 +61,12 @@
   transform: rotate(180deg);
 }
 
+@media screen and (max-width: 640px) {
+  .tableHeadButton {
+    padding-right: 20px;
+  }
+}
+
 @media screen and (max-width: 414px) {
   .tableHeadButton {
     padding-right: 0;

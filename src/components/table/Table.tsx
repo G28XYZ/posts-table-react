@@ -1,5 +1,6 @@
 import { FC, MouseEvent, ReactElement, useCallback, useEffect, useMemo, useState } from "react";
-import { useAppSelector } from "../../services/store";
+import tableSlice from "../../services/reducers/table";
+import { useAppDispatch, useAppSelector } from "../../services/store";
 import { emptyPostData, namesTableHead } from "../../utils/constants";
 import { sortingByIdNumber } from "../../utils/sortingByIdNumber";
 import { sortingByString } from "../../utils/sortingByString";
@@ -10,13 +11,15 @@ import style from "./table.module.css";
 const { generate } = require("shortid");
 
 const Table: FC<{ children: ReactElement }> = ({ children }) => {
+  const dispatch = useAppDispatch();
+  const { setSortValue } = tableSlice.actions;
   const tableState = useAppSelector((state) => state.table);
-  const { page, maxCountOnPage, searchText, tableHead, filteredPosts } = tableState;
+  const { page, maxCountOnPage, searchText, tableHead, filteredPosts, sortValue } = tableState;
 
   const [sortParam, setSortParam] = useState<ISortParam>({
-    id: false,
-    title: false,
-    body: false,
+    id: sortValue === "id",
+    title: sortValue === "title",
+    body: sortValue === "body",
   });
 
   // сортировка по выбранному заголовку, если массив не пустой и выбран заголовок
@@ -57,8 +60,9 @@ const Table: FC<{ children: ReactElement }> = ({ children }) => {
     return result;
   }, [sortedPosts, page]);
 
-  const handleChangeSort = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleChangeSortValue = (e: MouseEvent<HTMLButtonElement>) => {
     const name: string = (e.target as HTMLButtonElement).name;
+    dispatch(setSortValue({ value: sortParam[name] ? "" : name }));
     setSortParam({
       ...sortParam,
       ...Object.keys(sortParam).reduce((object: ISortParam, key: string) => {
@@ -73,7 +77,7 @@ const Table: FC<{ children: ReactElement }> = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem("tableState", JSON.stringify(tableState));
-  }, [page, sortParam, searchText]);
+  }, [page, sortValue, searchText]);
 
   return (
     <>
@@ -87,7 +91,7 @@ const Table: FC<{ children: ReactElement }> = ({ children }) => {
                   className={`${style.tableHeadButton} ${
                     sortParam[name] && style.tableHeadButtonActive
                   }`}
-                  onClick={handleChangeSort}
+                  onClick={handleChangeSortValue}
                 >
                   {namesTableHead[name]}
                 </button>

@@ -44,6 +44,10 @@ export const setTableState = (
   state = Object.assign(state, tableState);
 };
 
+export const setSortValue = (state: ITableState, action: PayloadAction<{ value: string }>) => {
+  state.sortValue = action.payload.value;
+};
+
 export const setSearchText = (
   state: ITableState,
   action: PayloadAction<{ searchText: string }>
