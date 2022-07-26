@@ -102,7 +102,7 @@ const Table: FC<{ children: ReactElement }> = ({ children }) => {
         <tbody>
           {checkedOnFillFilteredPosts.map((post: IFetchPostData | undefined) =>
             post ? (
-              <Post key={post.id} post={post} />
+              <Post key={generate()} post={post} />
             ) : (
               <Post key={generate()} post={emptyPostData} />
             )
