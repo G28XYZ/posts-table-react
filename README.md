@@ -3,7 +3,7 @@
 ## Demo:
 
 <p align="center">
-    <img src="https://github.com/G28XYZ/G28XYZ/blob/main/images/demo-posts-table.gif" alt='demo'/>
+    <img src="https://github.com/G28XYZ/G28XYZ/blob/main/images/demo-posts-table1.gif" alt='demo'/>
 </p>
 
 ## Link:
