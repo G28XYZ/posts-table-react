@@ -7,6 +7,9 @@
   width: 100%;
   background: #5a5c66;
   padding: 15px 24px;
+  font-size: 14px;
+  line-height: calc(19 / 14);
+  box-sizing: border-box;
 }
 
 .searchButton {

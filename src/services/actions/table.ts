@@ -19,6 +19,13 @@ export const setRequest = (state: ITableState, action: PayloadAction<{ request: 
   state.request = action.payload.request;
 };
 
+export const setFetchSuccess = (
+  state: ITableState,
+  action: PayloadAction<{ success: boolean }>
+) => {
+  state.fetchSuccess = action.payload.success;
+};
+
 export const setTableState = (
   state: ITableState,
   action: PayloadAction<{ tableState: ITableState }>

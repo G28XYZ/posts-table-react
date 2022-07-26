@@ -8,11 +8,12 @@ import NotFoundPage from "../not-found-page/NotFoundPage";
 import Main from "../main/Main";
 import LoaderRouter from "../loader-router/LoaderRouter";
 import ProtectedRoute from "../protected-route/ProtectedRoute";
+import Modal from "../modal/Modal";
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
   const tableState = useAppSelector((state) => state.table);
-  const { page } = tableState;
+  const { page, fetchSuccess } = tableState;
   const location = useLocation();
   const path = location.pathname;
   const navigate = useNavigate();
@@ -27,17 +28,19 @@ const App: FC = () => {
   }, []);
 
   useEffect(() => {
+    // так как главная страница это первая страница таблицы, то при запросе по основному адресу перенаправить на первую страницу
     if (path === "/") navigate(`/page/${page}`);
   }, [navigate, page, path]);
 
   useEffect(() => {
+    console.log("render app");
+    dispatch(fetchPosts());
     const storage = getStorage();
     if (storage && storage.posts.length) {
       dispatch(setRequest({ request: false }));
-      dispatch(setTableState({ tableState: storage }));
+      dispatch(setTableState({ tableState: { ...storage, fetchSuccess: true } }));
     } else {
       dispatch(setRequest({ request: true }));
-      dispatch(fetchPosts());
     }
   }, []);
 
@@ -45,12 +48,15 @@ const App: FC = () => {
     <div className={style.page}>
       <Routes>
         <Route path="/" element={<LoaderRouter />}>
+          {/* LoaderRouter вызывает прелоадер если идет запрос данных */}
           <Route path="page/:number" element={<ProtectedRoute />}>
+            {/* ProtectedRoute проверяет на корректную страницу если такой нет, то редиректит на первую страницу*/}
             <Route path="" element={<Main />} />
           </Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      {!fetchSuccess && <Modal />}
     </div>
   );
 };
