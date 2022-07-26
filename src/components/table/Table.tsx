@@ -11,15 +11,13 @@ const { generate } = require("shortid");
 
 const Table: FC<{ children: ReactElement }> = ({ children }) => {
   const tableState = useAppSelector((state) => state.table);
-  const { posts, page, maxCountOnPage, searchText, tableHead } = tableState;
+  const { page, maxCountOnPage, searchText, tableHead, filteredPosts } = tableState;
 
   const [sortParam, setSortParam] = useState<ISortParam>({
     id: false,
     title: false,
     body: false,
   });
-
-  const postsSlice = posts.slice((page - 1) * maxCountOnPage, page * maxCountOnPage);
 
   // сортировка по выбранному заголовку, если массив не пустой и выбран заголовок
   // то проверяется на условие по какому типу сортировать чтобы выполнить соответствующую сортировку
@@ -39,28 +37,25 @@ const Table: FC<{ children: ReactElement }> = ({ children }) => {
     [sortParam]
   );
 
-  // фильтрация постов по тексту введенному в поиске
   // возвращает массив, который предварительно проходит сортировку по выбранному заголовку
-  const filteredPostsByText = useMemo(() => {
-    const filtered: IFetchPostData[] = postsSlice.filter((post: IFetchPostData) => {
-      return post.body.includes(searchText) || post.title.includes(searchText);
-    });
-    return sorting(filtered);
-  }, [searchText, page, sortParam]);
+  const sortedPosts = useMemo(
+    () => sorting([...filteredPosts]),
+    [filteredPosts.length, sortParam, page]
+  );
 
-  // массив постов с проверкой на заполнение
-  // добавляет пустые объекты в массив до максимального количества постов на странице
+  // массив постов с проверкой на заполненность массива
+  // добавляет пустые объекты в массив до максимального количества отображаемых постов на странице
   // чтобы отрисовать полную таблицы как на макете
   // или возвращает массив предварительно отфильтровав от пустых объектов если они есть
   const checkedOnFillFilteredPosts: IFetchPostData[] | undefined[] = useMemo(() => {
-    let result = filteredPostsByText;
+    let result = sortedPosts.slice((page - 1) * maxCountOnPage, page * maxCountOnPage);
     if (result.length < maxCountOnPage) {
       result = [...result, ...Array(maxCountOnPage - result.length)];
     } else {
       result = result.filter((post) => post.id > 0);
     }
-    return result.slice();
-  }, [filteredPostsByText, page, sortParam]);
+    return result;
+  }, [sortedPosts, page]);
 
   const handleChangeSort = (e: MouseEvent<HTMLButtonElement>) => {
     const name: string = (e.target as HTMLButtonElement).name;
@@ -110,7 +105,7 @@ const Table: FC<{ children: ReactElement }> = ({ children }) => {
           )}
         </tbody>
       </table>
-      {children}
+      {children} {/* Pagination */}
     </>
   );
 };

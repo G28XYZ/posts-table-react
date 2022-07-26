@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ITableState } from "../../utils/types";
+import { filterPosts } from "../../utils/filterPosts";
+import { IFetchPostData, ITableState } from "../../utils/types";
 import {
   fetchPosts,
   setRequest,
@@ -13,6 +14,7 @@ export const initialState = {
   request: true,
   fetchSuccess: true,
   posts: [],
+  filteredPosts: [],
   page: 1,
   searchText: "",
   maxCountOnPage: 10,
@@ -33,6 +35,9 @@ export const tableSlice = createSlice({
     builder.addCase(fetchPosts.fulfilled, (state: ITableState, action) => {
       if (action.payload.success) {
         state.posts = action.payload.data;
+        state.filteredPosts = state.posts.filter((post: IFetchPostData) =>
+          filterPosts(post, state.searchText)
+        );
         state.fetchSuccess = true;
         state.request = false;
       } else {

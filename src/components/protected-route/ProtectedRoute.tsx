@@ -3,8 +3,8 @@ import { Navigate, Outlet, Params, useParams } from "react-router-dom";
 import { useAppSelector } from "../../services/store";
 
 const ProtectedRoute: FC = () => {
-  const { maxCountOnPage, posts } = useAppSelector((state) => state.table);
-  const maxCount = Math.ceil(posts.length || 1 / maxCountOnPage);
+  const { maxCountOnPage, filteredPosts } = useAppSelector((state) => state.table);
+  const maxCount = Math.ceil((filteredPosts.length || 1) / maxCountOnPage);
   const params = useParams<Params>();
   const { number } = Object.assign(params);
 

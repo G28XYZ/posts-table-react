@@ -10,16 +10,16 @@ const Pagination: FC = () => {
   const { setPage } = tableSlice.actions;
   const params = useParams<Params>();
 
-  const { page, maxCountOnPage, posts } = useAppSelector((state) => state.table);
+  const { page, maxCountOnPage, filteredPosts } = useAppSelector((state) => state.table);
 
   const maxPages = useMemo(
-    () => Math.ceil(posts.length / maxCountOnPage),
-    [posts.length, maxCountOnPage]
+    () => Math.ceil(filteredPosts.length / maxCountOnPage),
+    [filteredPosts.length, maxCountOnPage]
   );
 
   const pagesList = useMemo(
-    () => Array.from({ length: Math.ceil(posts.length / maxCountOnPage) }, (_, i) => i + 1),
-    [posts.length, maxCountOnPage]
+    () => Array.from({ length: Math.ceil(filteredPosts.length / maxCountOnPage) }, (_, i) => i + 1),
+    [filteredPosts.length, maxCountOnPage]
   );
 
   useEffect(() => {

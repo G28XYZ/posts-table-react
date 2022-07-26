@@ -2,6 +2,7 @@ export interface ITableState {
   request: boolean;
   fetchSuccess: boolean;
   posts: [] | IFetchPostData[];
+  filteredPosts: [] | IFetchPostData[];
   page: number;
   searchText: string;
   maxCountOnPage: number;

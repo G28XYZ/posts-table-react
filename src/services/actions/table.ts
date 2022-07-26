@@ -1,6 +1,7 @@
 import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import api from "../../utils/api";
-import { ITableState } from "../../utils/types";
+import { filterPosts } from "../../utils/filterPosts";
+import { IFetchPostData, ITableState } from "../../utils/types";
 
 export const fetchPosts = createAsyncThunk("table/fetchPosts", async () => {
   const response = await api
@@ -48,4 +49,7 @@ export const setSearchText = (
   action: PayloadAction<{ searchText: string }>
 ) => {
   state.searchText = action.payload.searchText;
+  state.filteredPosts = state.posts.filter((post: IFetchPostData) =>
+    filterPosts(post, state.searchText)
+  );
 };
