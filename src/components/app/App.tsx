@@ -39,7 +39,7 @@ const App: FC = () => {
     const storage = getStorage();
     if (storage) {
       dispatch(setRequest({ request: false }));
-      dispatch(setTableState({ tableState: { ...storage, fetchSuccess: true } }));
+      dispatch(setTableState({ tableState: { ...storage, fetchSuccess: true, sortValue: "" } }));
     } else {
       dispatch(setRequest({ request: true }));
     }

@@ -27,7 +27,7 @@ const Table: FC<{ children: ReactElement }> = ({ children }) => {
   // возвращает массив
   const sorting = useCallback(
     (array: IFetchPostData[]) => {
-      const key = Object.keys(sortParam).find((key) => sortParam[key]) as keyof IFetchPostData;
+      const key = sortValue as keyof IFetchPostData;
       if (array.length && key) {
         if (typeof array[0][key] === "number") {
           return sortingByIdNumber(array, key, sortParam);
@@ -50,7 +50,7 @@ const Table: FC<{ children: ReactElement }> = ({ children }) => {
   // добавляет пустые объекты в массив до максимального количества отображаемых постов на странице
   // чтобы отрисовать полную таблицы как на макете
   // или возвращает массив предварительно отфильтровав от пустых объектов если они есть
-  const checkedOnFillFilteredPosts: IFetchPostData[] | undefined[] = useMemo(() => {
+  const renderingPostsWithCheckedOnFill: IFetchPostData[] | undefined[] = useMemo(() => {
     let result = sortedPosts.slice((page - 1) * maxCountOnPage, page * maxCountOnPage);
     if (result.length < maxCountOnPage) {
       result = [...result, ...Array(maxCountOnPage - result.length)];
@@ -62,7 +62,7 @@ const Table: FC<{ children: ReactElement }> = ({ children }) => {
 
   const handleChangeSortValue = (e: MouseEvent<HTMLButtonElement>) => {
     const name: string = (e.target as HTMLButtonElement).name;
-    dispatch(setSortValue({ value: sortParam[name] ? "" : name }));
+    dispatch(setSortValue({ value: name }));
     setSortParam({
       ...sortParam,
       ...Object.keys(sortParam).reduce((object: ISortParam, key: string) => {
@@ -89,7 +89,8 @@ const Table: FC<{ children: ReactElement }> = ({ children }) => {
                 <button
                   name={name}
                   className={`${style.tableHeadButton} ${
-                    sortParam[name] && style.tableHeadButtonActive
+                    name === sortValue &&
+                    (sortParam[name] ? style.tableHeadButtonDown : style.tableHeadButtonUp)
                   }`}
                   onClick={handleChangeSortValue}
                 >
@@ -100,7 +101,7 @@ const Table: FC<{ children: ReactElement }> = ({ children }) => {
           </tr>
         </thead>
         <tbody>
-          {checkedOnFillFilteredPosts.map((post: IFetchPostData | undefined) =>
+          {renderingPostsWithCheckedOnFill.map((post: IFetchPostData | undefined) =>
             post ? (
               <Post key={generate()} post={post} />
             ) : (
