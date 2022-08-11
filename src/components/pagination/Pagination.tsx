@@ -23,13 +23,14 @@ const Pagination: FC = () => {
 
   const pagesList = useMemo(() => {
     let array = Array.from({ length: paginationCount }, (_, i) => i + 1);
-    if (page + 3 > paginationCount) {
-      return array.slice(paginationCount - 4, paginationCount);
-    } else if (page > 3) {
-      return array.slice(page - 2, page + 1);
-    } else {
-      return array.slice(0, 5);
+    if (paginationCount >= 7) {
+      if (page + 3 > paginationCount) {
+        return array.slice(paginationCount - 4, paginationCount);
+      } else if (page > 3) {
+        return array.slice(page - 2, page + 1);
+      }
     }
+    return array.slice(0, 5);
   }, [paginationCount, page]);
 
   const FirstPage = () => (
