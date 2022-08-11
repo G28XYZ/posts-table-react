@@ -13,7 +13,7 @@ import tableSlice from "../../services/reducers/table";
 const App: FC = () => {
   const dispatch = useAppDispatch();
   const tableState = useAppSelector((state) => state.table);
-  const { page, fetchSuccess, filteredPosts } = tableState;
+  const { page, fetchSuccess } = tableState;
   const location = useLocation();
   const path = location.pathname;
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const App: FC = () => {
   useEffect(() => {
     // так как главная страница это первая страница таблицы,
     // то при запросе по основному адресу перенаправить на первую страницу
-    if (path === "/" && filteredPosts.length) navigate(`/page/${page}`);
+    if (path === "/") navigate(`/page/${page}`);
   }, [navigate, page, path]);
 
   useEffect(() => {
