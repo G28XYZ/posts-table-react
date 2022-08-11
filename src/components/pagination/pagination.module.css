@@ -55,7 +55,13 @@
 }
 
 @media screen and (max-width: 414px) {
+  .pagination {
+    padding: 0 15px 12px 15px;
+  }
   .pageList {
-    max-width: 100px;
+    font-size: 14px;
+  }
+  .button {
+    font-size: 16px;
   }
 }

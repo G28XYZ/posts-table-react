@@ -60,6 +60,8 @@ export const tableSlice = createSlice<ITableState, SliceCaseReducers<ITableState
             filterPosts(post, decodeStorage.searchText)
           );
           state.paginationCount = Math.ceil(state.filteredPosts.length / state.maxCountOnPage);
+          state.sortOrdering = decodeStorage.sortOrdering;
+          state.sortParameter = decodeStorage.sortParameter;
           state = { ...state, ...decodeStorage };
         }
       } else {
