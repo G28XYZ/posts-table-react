@@ -2,9 +2,9 @@
   "name": "posts-table-react",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "engines": {
-    "npm": "8.15.0",
-    "node": "17.3.0"
+    "npm": "8.15.0"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.3",
