@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import { IFetchPostData } from "../../utils/types";
 import style from "./post.module.css";
 
@@ -12,4 +12,4 @@ const Post: FC<{ post: IFetchPostData }> = ({ post }) => {
   );
 };
 
-export default Post;
+export default memo(Post);

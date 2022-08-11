@@ -1,46 +1,95 @@
-import { FC, useEffect, useMemo } from "react";
-import { Link, Params, useParams } from "react-router-dom";
+import { FC, useCallback, useEffect, useMemo } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import tableSlice from "../../services/reducers/table";
 import { useAppDispatch, useAppSelector } from "../../services/store";
 import style from "./pagination.module.css";
 
 const Pagination: FC = () => {
   const dispatch = useAppDispatch();
-
+  const navigate = useNavigate();
   const { setPage } = tableSlice.actions;
-  const params = useParams<Params>();
 
-  const { page, maxCountOnPage, filteredPosts } = useAppSelector((state) => state.table);
+  const { page, paginationCount } = useAppSelector((state) => state.table);
 
-  const maxPages = useMemo(
-    () => Math.ceil(filteredPosts.length / maxCountOnPage),
-    [filteredPosts.length, maxCountOnPage]
+  const handleNextPage = useCallback(
+    () => dispatch(setPage({ page: page + 1 })),
+    [dispatch, page, setPage]
   );
 
-  const pagesList = useMemo(
-    () => Array.from({ length: Math.ceil(filteredPosts.length / maxCountOnPage) }, (_, i) => i + 1),
-    [filteredPosts.length, maxCountOnPage]
+  const handlePrevPage = useCallback(
+    () => dispatch(setPage({ page: page - 1 })),
+    [dispatch, page, setPage]
+  );
+
+  const pagesList = useMemo(() => {
+    let array = Array.from({ length: paginationCount }, (_, i) => i + 1);
+    if (page + 3 > paginationCount) {
+      return array.slice(paginationCount - 4, paginationCount);
+    } else if (page > 3) {
+      return array.slice(page - 2, page + 1);
+    } else {
+      return array.slice(0, 5);
+    }
+  }, [paginationCount, page]);
+
+  const FirstPage = () => (
+    <li>
+      <Link className={`${style.page}`} to={`/page/1`}>
+        {1}
+      </Link>
+      {` ... `}
+    </li>
+  );
+
+  const LastPage = () => (
+    <li>
+      {` ... `}
+      <Link className={`${style.page}`} to={`/page/${paginationCount}`}>
+        {paginationCount}
+      </Link>
+    </li>
   );
 
   useEffect(() => {
-    dispatch(setPage({ page: parseInt(params.number as string) }));
-  }, [dispatch, params.number, setPage]);
+    navigate(`/page/${page}`);
+  }, [navigate, page]);
 
   return (
     <div className={style.pagination}>
-      <Link className={style.button} to={`/page/${page - 1 ? page - 1 : page}`}>
+      <button
+        disabled={page === 1 || paginationCount === 0}
+        className={`${style.button} ${
+          (page === 1 || paginationCount === 0) && style.button_disabled
+        }`}
+        onClick={handlePrevPage}
+      >
         Назад
-      </Link>
+      </button>
+
       <ul className={style.pageList}>
+        {paginationCount !== 0 && page > 3 && <FirstPage />}
         {pagesList.map((_page, i) => (
-          <li className={`page ${page === _page && style.pageActive}`} key={i}>
-            {_page}
+          <li key={i}>
+            <Link
+              className={`${style.page} ${page === _page && style.pageActive}`}
+              to={`/page/${_page}`}
+            >
+              {_page}
+            </Link>
           </li>
         ))}
+        {paginationCount !== 0 && page + 2 < paginationCount && <LastPage />}
       </ul>
-      <Link className={style.button} to={`/page/${page + 1 > maxPages ? page : page + 1}`}>
+
+      <button
+        disabled={page === paginationCount || paginationCount === 0}
+        className={`${style.button} ${
+          (page === paginationCount || paginationCount === 0) && style.button_disabled
+        }`}
+        onClick={handleNextPage}
+      >
         Далее
-      </Link>
+      </button>
     </div>
   );
 };

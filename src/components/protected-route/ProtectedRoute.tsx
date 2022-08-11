@@ -1,18 +1,34 @@
-import { FC } from "react";
+import { FC, useCallback, useEffect } from "react";
 import { Navigate, Outlet, Params, useParams } from "react-router-dom";
-import { useAppSelector } from "../../services/store";
+import tableSlice from "../../services/reducers/table";
+import { useAppDispatch, useAppSelector } from "../../services/store";
 
 const ProtectedRoute: FC = () => {
-  const { maxCountOnPage, filteredPosts } = useAppSelector((state) => state.table);
-  const maxCount = Math.ceil((filteredPosts.length || 1) / maxCountOnPage);
+  const dispatch = useAppDispatch();
+  const { paginationCount } = useAppSelector((state) => state.table);
+  const { setPageFromProtectedRoute, setPage } = tableSlice.actions;
   const params = useParams<Params>();
   const { number } = Object.assign(params);
 
-  const checkParams = () => {
-    return isNaN(number) !== false || maxCount < parseInt(number) || parseInt(number) <= 0;
-  };
+  /*
+   * проверка валидности параметра в запросе
+   * @return true or false (boolean) возвращает true - если невалидны, иначе false
+   */
+  const isNotValidParams = useCallback(() => {
+    return isNaN(number) || parseInt(number) <= 0 || (paginationCount || 1) < parseInt(number);
+  }, [number, paginationCount]);
 
-  return checkParams() ? <Navigate to={`/page/1`} /> : <Outlet />;
+  useEffect(() => {
+    // если параметры не валидны то сбросить сохраненную страницу на первую
+    // иначе сохранить текущую
+    if (isNotValidParams()) {
+      dispatch(setPageFromProtectedRoute({ page: 1 }));
+    } else {
+      dispatch(setPage({ page: parseInt(number) }));
+    }
+  }, [isNotValidParams]);
+
+  return isNotValidParams() ? <Navigate to={`/page/1`} /> : <Outlet />;
 };
 
 export default ProtectedRoute;

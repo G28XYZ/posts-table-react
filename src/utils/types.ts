@@ -1,3 +1,5 @@
+import { CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+
 export interface ITableState {
   request: boolean;
   fetchSuccess: boolean;
@@ -6,8 +8,19 @@ export interface ITableState {
   page: number;
   searchText: string;
   maxCountOnPage: number;
+  paginationCount: number;
   tableHead: string[];
-  sortValue: string;
+  sortParameter: string;
+  sortOrdering: boolean;
+}
+
+export interface ITableAction {
+  tableState: ITableState;
+  request: boolean;
+  searchText: string;
+  parameter: string;
+  success: boolean;
+  page: number;
 }
 
 export interface IFetchPostData {
@@ -20,3 +33,5 @@ export interface IFetchPostData {
 export interface ISortParam {
   [key: string]: boolean;
 }
+
+export type TCaseReducerTable = CaseReducer<ITableState, PayloadAction<ITableAction>>;
