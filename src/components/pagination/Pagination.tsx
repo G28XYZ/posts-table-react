@@ -68,7 +68,7 @@ const Pagination: FC = () => {
       </button>
 
       <ul className={style.pageList}>
-        {paginationCount !== 0 && page > 3 && <FirstPage />}
+        {paginationCount !== 0 && page > 3 && paginationCount >= 7 && <FirstPage />}
         {pagesList.map((_page, i) => (
           <li key={i}>
             <Link
@@ -79,7 +79,9 @@ const Pagination: FC = () => {
             </Link>
           </li>
         ))}
-        {paginationCount !== 0 && page + 2 < paginationCount && <LastPage />}
+        {paginationCount !== 0 && page + 2 < paginationCount && paginationCount >= 7 && (
+          <LastPage />
+        )}
       </ul>
 
       <button
