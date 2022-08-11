@@ -26,7 +26,11 @@ const Table: FC<{ children: ReactElement }> = ({ children }) => {
           {filteredPosts
             .slice((page - 1) * maxCountOnPage, maxCountOnPage * page)
             .map((post: IFetchPostData | undefined, index) =>
-              post ? <Post key={post.id} post={post} /> : <Post key={index} post={emptyPostData} />
+              post ? (
+                <Post key={post.id} post={post} />
+              ) : (
+                <Post key={`_${index.toString()}`} post={emptyPostData} />
+              )
             )}
         </tbody>
       </table>
