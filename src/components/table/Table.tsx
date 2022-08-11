@@ -7,8 +7,6 @@ import Post from "../post-component/Post";
 import TableHead from "../table-head-component/TableHead";
 import style from "./table.module.css";
 
-const { generate } = require("shortid");
-
 const Table: FC<{ children: ReactElement }> = ({ children }) => {
   const dispatch = useAppDispatch();
   const { changePostsOrdering } = tableSlice.actions;
@@ -27,12 +25,8 @@ const Table: FC<{ children: ReactElement }> = ({ children }) => {
         <tbody>
           {filteredPosts
             .slice((page - 1) * maxCountOnPage, maxCountOnPage * page)
-            .map((post: IFetchPostData | undefined) =>
-              post ? (
-                <Post key={generate()} post={post} />
-              ) : (
-                <Post key={generate()} post={emptyPostData} />
-              )
+            .map((post: IFetchPostData | undefined, index) =>
+              post ? <Post key={post.id} post={post} /> : <Post key={index} post={emptyPostData} />
             )}
         </tbody>
       </table>

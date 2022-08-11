@@ -82,8 +82,4 @@
     top: 50%;
     transform: translate(50%, 100%);
   }
-
-  .tableHeadButtonActive:after {
-    transform: translate(50%, 100%) rotate(180deg);
-  }
 }

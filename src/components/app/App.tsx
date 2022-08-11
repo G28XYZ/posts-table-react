@@ -8,7 +8,6 @@ import Main from "../main/Main";
 import LoaderRouter from "../loader-router/LoaderRouter";
 import ProtectedRoute from "../protected-route/ProtectedRoute";
 import Modal from "../modal/Modal";
-import tableSlice from "../../services/reducers/table";
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
