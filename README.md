@@ -8,7 +8,7 @@
 
 ## Link:
 
-<a href='https://posts-table-react.vercel.app/'>Posts Table</a>
+<a href='https://posts-table-react.vercel.app/' target='_blank'>Posts Table</a>
 
 ## Стек:
 
