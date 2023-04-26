@@ -8,7 +8,7 @@
 
 ## Link:
 
-<a href='https://posts-table-react.herokuapp.com/'>Posts Table</a>
+<a href='https://posts-table-react.vercel.app/'>Posts Table</a>
 
 ## Стек:
 
